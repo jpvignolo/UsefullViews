@@ -27,7 +27,7 @@ public class EditTextPlus extends EditText {
     private void setCustomFont(Context ctx, AttributeSet attrs) {
     	Log.d("TextViewPlus","setCustomFont");
         TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.TextViewPlus);
-        String customFont = a.getString(R.styleable.TextViewPlus_customFont);
+        String customFont = a.getString(R.styleable.usefullviews_customFont);
         setCustomFont(ctx, customFont);
         a.recycle();
     }

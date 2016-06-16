@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 
 import com.jipouille.usefullviews.views.EditTextPlusPhoneNumber;
+import com.jipouille.usefullviews.views.GroupRadioPlus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,8 +18,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        EditTextPlusPhoneNumber tel = (EditTextPlusPhoneNumber) findViewById(R.id.telinput);
-        PhoneNumberFormattingTextWatcher watcher = new PhoneNumberFormattingTextWatcher();
-        tel.addTextChangedListener(watcher);
+        List a = new <String>ArrayList();
+        a.add("Bar");
+        a.add("Salle");
+        a.add("Terrasse");
+        a.add("Cuisine");
+        GroupRadioPlus tel = (GroupRadioPlus) findViewById(R.id.telinput);
+        tel.setDataList(a);
     }
 }

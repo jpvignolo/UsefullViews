@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="TextViewPlus">
+    <declare-styleable name="usefullviews">
         <attr name="customFont" format="string"/>
+        <attr name="maxRowElements" format="integer"/>
     </declare-styleable>
 </resources>

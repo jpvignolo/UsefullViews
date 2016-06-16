@@ -24,17 +24,15 @@
         android:text="Hello World!"
         android:textSize="20dp"/>
 
-    <com.jipouille.usefullviews.views.EditTextPlusPhoneNumber
+    <com.jipouille.usefullviews.views.GroupRadioPlus
         xmlns:foo="http://schemas.android.com/apk/res-auto"
-        android:enabled="true"
         android:id="@+id/telinput"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
+        android:stretchColumns="*"
         android:layout_marginTop="70dp"
         android:layout_below="@id/textviewplus"
+        android:background="@android:color/holo_red_light"
         foo:customFont="bariol_regular-webfont.ttf"/>
 
 </RelativeLayout>
