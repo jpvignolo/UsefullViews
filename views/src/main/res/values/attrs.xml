@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="usefullviews">
+    <declare-styleable name="TextViewPlus">
         <attr name="customFont" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="GroupRadioPlus">
         <attr name="maxRowElements" format="integer"/>
+        <attr name="underlineHeight" format="dimension"/>
+        <attr name="underlineColor" format="color"/>
     </declare-styleable>
 </resources>
