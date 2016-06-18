@@ -7,5 +7,13 @@
         <attr name="maxRowElements" format="integer"/>
         <attr name="underlineHeight" format="dimension"/>
         <attr name="underlineColor" format="color"/>
+        <attr name="btnPaddingLeft" format="dimension"/>
+        <attr name="btnPaddingTop" format="dimension"/>
+        <attr name="btnPaddingRight" format="dimension"/>
+        <attr name="btnPaddingBottom" format="dimension"/>
+        <attr name="btnMarginLeft" format="dimension"/>
+        <attr name="btnMarginTop" format="dimension"/>
+        <attr name="btnMarginRight" format="dimension"/>
+        <attr name="btnMarginBottom" format="dimension"/>
     </declare-styleable>
 </resources>
