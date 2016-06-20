@@ -9,6 +9,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,8 @@ public class GroupRadioPlus extends TableLayout {
     private int oldPaddingOffset = 0;
     private int oldRow = -1;
     private int btnBackground;
+    private float textSize;
+    private boolean ucFirst = false;
     private RadioButton clickedButton;
     private SparseArray<TableRow> rowsView;
 
@@ -79,6 +82,8 @@ public class GroupRadioPlus extends TableLayout {
         marginTop = a2.getDimensionPixelSize(R.styleable.GroupRadioPlus_btnMarginTop,1);
         marginRight = a2.getDimensionPixelSize(R.styleable.GroupRadioPlus_btnMarginRight,1);
         marginBottom = a2.getDimensionPixelSize(R.styleable.GroupRadioPlus_btnMarginBottom,1);
+        ucFirst = a2.getBoolean(R.styleable.GroupRadioPlus_ucFirst,false);
+        textSize = a2.getDimension(R.styleable.GroupRadioPlus_textSize,12.0f);
         rowsView = new SparseArray<>();
         a.recycle();
     }
@@ -94,6 +99,7 @@ public class GroupRadioPlus extends TableLayout {
         b.setButtonDrawable(new StateListDrawable());
         b.setBackgroundResource(btnBackground);
         b.setGravity(Gravity.CENTER);
+        b.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         b.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT);
         lp.setMargins(marginLeft,marginTop,marginRight,marginBottom);
@@ -149,17 +155,27 @@ public class GroupRadioPlus extends TableLayout {
         tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         TableRow trUnderscore = styleUnderline();
         rowsView.put(0,trUnderscore);
+        tr.setBaselineAligned(false);
         for (int i =0; i<data.size(); i++) {
             if ((i % maxRowElements) == 0 && i > 0) {
                 tr = new TableRow(this.getContext());
                 tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
                 tr.setGravity(Gravity.CENTER_HORIZONTAL);
+                tr.setBaselineAligned(false);
                 trUnderscore = styleUnderline();
                 rowsView.put(i/maxRowElements,trUnderscore);
             }
             RadioButton b = new RadioButton(this.getContext());
             styleBtn(b);
-            b.setText((String) data.get(i));
+            String txtSkill = "";
+            if (ucFirst) {
+                char c[] = ((String) data.get(i)).toLowerCase().toCharArray();
+                c[0] = Character.toUpperCase(c[0]);
+                txtSkill = new String(c);
+            } else {
+                txtSkill = (String) data.get(i);
+            }
+            b.setText(txtSkill);
             b.setTag(i);
             tr.addView(b);
             b.setOnClickListener(new OnClickListener() {
@@ -169,7 +185,8 @@ public class GroupRadioPlus extends TableLayout {
                         clickedButton.setChecked(false);
                     clickedButton = (RadioButton) v;
                     calculateRowClicked((int)v.getTag());
-                    onClickListener.onClick((int)v.getTag());
+                    if (onClickListener != null)
+                        onClickListener.onClick((int)v.getTag());
                 }
             });
             if ((i % maxRowElements) == 0) {
@@ -198,5 +215,37 @@ public class GroupRadioPlus extends TableLayout {
 
     public void setOnClickListener(GroupRadioPlusClickListener onClickListener) {
         this.onClickListener = onClickListener;
+    }
+
+    public int getButtonPaddingBottom() {
+        return paddingBottom;
+    }
+
+    public void setButtonPaddingBottom(int paddingBottom) {
+        this.paddingBottom = paddingBottom;
+    }
+
+    public int getButtonPaddingLeft() {
+        return paddingLeft;
+    }
+
+    public void setButtonPaddingLeft(int paddingLeft) {
+        this.paddingLeft = paddingLeft;
+    }
+
+    public int getButtonPaddingTop() {
+        return paddingTop;
+    }
+
+    public void setButtonPaddingTop(int paddingTop) {
+        this.paddingTop = paddingTop;
+    }
+
+    public int getButtonPaddingRight() {
+        return paddingRight;
+    }
+
+    public void setButtonPaddingRight(int paddingRight) {
+        this.paddingRight = paddingRight;
     }
 }

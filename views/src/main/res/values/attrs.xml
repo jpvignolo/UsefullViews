@@ -17,5 +17,7 @@
         <attr name="btnMarginTop" format="dimension"/>
         <attr name="btnMarginRight" format="dimension"/>
         <attr name="btnMarginBottom" format="dimension"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="ucFirst" format="boolean"/>
     </declare-styleable>
 </resources>
