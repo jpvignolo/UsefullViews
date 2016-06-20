@@ -31,9 +31,10 @@
         android:layout_height="wrap_content"
         android:stretchColumns="*"
         android:layout_marginTop="70dp"
-        android:background="@android:color/white"
         android:layout_below="@id/textviewplus"
+        foo:maxRowElements="3"
         foo:customFont="bariol_regular-webfont.ttf"
-        foo:underlineColor="@android:color/holo_orange_light"/>
+        foo:underlineColor="@android:color/holo_orange_light"
+        foo:underlineBackgroundColor="@android:color/white"/>
 
 </RelativeLayout>

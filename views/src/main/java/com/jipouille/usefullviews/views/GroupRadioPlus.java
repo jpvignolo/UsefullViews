@@ -18,6 +18,8 @@ import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import com.jipouille.usefullviews.views.listeners.GroupRadioPlusClickListener;
+
 import java.util.List;
 
 /**
@@ -41,10 +43,14 @@ public class GroupRadioPlus extends TableLayout {
     private int nbRows = 0;
     private int nbCellLastRow;
     private int underlineColor;
+    private int underlineBackgroundColor;
     private int oldPaddingOffset = 0;
     private int oldRow = -1;
+    private int btnBackground;
     private RadioButton clickedButton;
     private SparseArray<TableRow> rowsView;
+
+    private GroupRadioPlusClickListener onClickListener;
 
     public GroupRadioPlus(Context context) {
         super(context);
@@ -61,8 +67,10 @@ public class GroupRadioPlus extends TableLayout {
         TypedArray a2 = ctx.obtainStyledAttributes(attrs, R.styleable.GroupRadioPlus);
         customFont = a.getString(R.styleable.TextViewPlus_customFont);
         maxRowElements = a2.getInt(R.styleable.GroupRadioPlus_maxRowElements,3);
+        btnBackground = a2.getResourceId(R.styleable.GroupRadioPlus_buttonBackground,R.drawable.radiobuttonbg);
         underlineHeight = a2.getDimensionPixelSize(R.styleable.GroupRadioPlus_underlineHeight,10);
         underlineColor = a2.getColor(R.styleable.GroupRadioPlus_underlineColor,Color.TRANSPARENT);
+        underlineBackgroundColor = a2.getColor(R.styleable.GroupRadioPlus_underlineBackgroundColor,Color.TRANSPARENT);
         paddingLeft = a2.getDimensionPixelSize(R.styleable.GroupRadioPlus_btnPaddingLeft,5);
         paddingTop = a2.getDimensionPixelSize(R.styleable.GroupRadioPlus_btnPaddingTop,40);
         paddingRight = a2.getDimensionPixelSize(R.styleable.GroupRadioPlus_btnPaddingRight,5);
@@ -84,7 +92,7 @@ public class GroupRadioPlus extends TableLayout {
 
     private void styleBtn(RadioButton b) {
         b.setButtonDrawable(new StateListDrawable());
-        b.setBackgroundResource(R.drawable.radiobuttonbg);
+        b.setBackgroundResource(btnBackground);
         b.setGravity(Gravity.CENTER);
         b.setPadding(paddingLeft,paddingTop,paddingRight,paddingBottom);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT);
@@ -108,8 +116,8 @@ public class GroupRadioPlus extends TableLayout {
         int rowPos = (i%maxRowElements);
         final TableRow tr = rowsView.get(row);
         int offset = 0;
-        if (row == (nbRows-1)) {
-            offset = (tr.getWidth()/maxRowElements)/nbCellLastRow;
+        if (row == (nbRows-1) && nbCellLastRow != maxRowElements) {
+            offset = (tr.getWidth()- nbCellLastRow*tr.getWidth()/maxRowElements)/2;
         }
         final int paddingOffset = offset+(i%maxRowElements)*tr.getWidth()/maxRowElements;
 
@@ -130,7 +138,7 @@ public class GroupRadioPlus extends TableLayout {
             tr.setPadding(paddingOffset, 0, tr.getWidth() - paddingOffset - tr.getWidth() / maxRowElements, 0);
         }
 
-        Log.d(TAG,"x:"+rowPos+" y:"+row+" marginLeft:"+paddingOffset+" marginRight:"+(tr.getWidth()-paddingOffset-tr.getWidth()/maxRowElements)+" offset:"+paddingOffset+" oldPaddingOffset:"+oldPaddingOffset);
+        Log.d(TAG,"x:"+rowPos+" y:"+row+" marginLeft:"+paddingOffset+" marginRight:"+(tr.getWidth()-paddingOffset-tr.getWidth()/maxRowElements)+" offset:"+paddingOffset+" oldPaddingOffset:"+oldPaddingOffset+" "+nbCellLastRow);
         oldPaddingOffset = paddingOffset;
         oldRow = row;
 
@@ -161,6 +169,7 @@ public class GroupRadioPlus extends TableLayout {
                         clickedButton.setChecked(false);
                     clickedButton = (RadioButton) v;
                     calculateRowClicked((int)v.getTag());
+                    onClickListener.onClick((int)v.getTag());
                 }
             });
             if ((i % maxRowElements) == 0) {
@@ -173,5 +182,21 @@ public class GroupRadioPlus extends TableLayout {
             }
             nbCellLastRow = 1+i%maxRowElements;
         }
+    }
+
+    public int getMaxRowElements() {
+        return maxRowElements;
+    }
+
+    public void setMaxRowElements(int maxRowElements) {
+        this.maxRowElements = maxRowElements;
+    }
+
+    public GroupRadioPlusClickListener getOnClickListener() {
+        return onClickListener;
+    }
+
+    public void setOnClickListener(GroupRadioPlusClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 }

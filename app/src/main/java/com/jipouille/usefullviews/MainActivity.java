@@ -23,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
         a.add("Salle");
         a.add("Terrasse");
         a.add("Cuisine");
-        a.add("Vestiaire");
+        a.add("Reception");
+        a.add("Foo");
+        a.add("Bar");
         GroupRadioPlus tel = (GroupRadioPlus) findViewById(R.id.telinput);
         tel.setDataList(a);
     }
