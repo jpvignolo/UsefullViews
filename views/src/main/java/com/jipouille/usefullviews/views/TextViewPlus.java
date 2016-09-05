@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.jipouille.usefullviews.views.tools.FontManager;
+
 public class TextViewPlus extends TextView {
     private static final String TAG = "TextView";
 
@@ -35,13 +37,16 @@ public class TextViewPlus extends TextView {
     public boolean setCustomFont(Context ctx, String asset) {
         Typeface tf = null;
         try {
-        tf = Typeface.createFromAsset(ctx.getAssets(), "fonts/"+asset);  
+            FontManager fm = FontManager.getInstance();
+            if (fm == null)
+                fm.init(ctx.getAssets());
+        tf = Typeface.createFromAsset(ctx.getAssets(), "fonts/"+asset);
         } catch (Exception e) {
             Log.e(TAG, "Could not get typeface "+asset+": "+e.getMessage());
             return false;
         }
 
-        setTypeface(tf);  
+        setTypeface(tf);
         return true;
     }
 
