@@ -24,6 +24,16 @@ public class TextViewPlus extends TextView {
     public TextViewPlus(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setCustomFont(context, attrs);
+        ucFirst(context,attrs);
+    }
+
+    public void ucFirst(Context ctx, AttributeSet attrs) {
+        TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.TextViewPlus);
+        boolean ucfirst = a.getBoolean(R.styleable.GroupRadioPlus_ucFirst,false);
+        if (ucfirst) {
+            String txt = this.getText().toString().substring(0, 1).toUpperCase() + this.getText().toString().substring(1);
+            this.setText(txt);
+        }
     }
 
     private void setCustomFont(Context ctx, AttributeSet attrs) {

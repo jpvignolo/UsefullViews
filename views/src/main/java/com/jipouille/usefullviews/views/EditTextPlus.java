@@ -22,6 +22,16 @@ public class EditTextPlus extends EditText {
     public EditTextPlus(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setCustomFont(context, attrs);
+        ucFirst(context,attrs);
+    }
+
+    public void ucFirst(Context ctx, AttributeSet attrs) {
+        TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.TextViewPlus);
+        boolean ucfirst = a.getBoolean(R.styleable.GroupRadioPlus_ucFirst,false);
+        if (ucfirst) {
+            String txt = this.getText().toString().substring(0, 1).toUpperCase() + this.getText().toString().substring(1);
+            this.setText(txt);
+        }
     }
 
     private void setCustomFont(Context ctx, AttributeSet attrs) {
@@ -35,13 +45,13 @@ public class EditTextPlus extends EditText {
     public boolean setCustomFont(Context ctx, String asset) {
         Typeface tf = null;
         try {
-        tf = Typeface.createFromAsset(ctx.getAssets(), "fonts/"+asset);  
+        tf = Typeface.createFromAsset(ctx.getAssets(), "fonts/"+asset);
         } catch (Exception e) {
             Log.e(TAG, "Could not get typeface "+asset+": "+e.getMessage());
             return false;
         }
 
-        setTypeface(tf);  
+        setTypeface(tf);
         return true;
     }
 
